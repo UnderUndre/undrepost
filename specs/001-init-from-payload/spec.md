@@ -23,7 +23,7 @@
 
 - Q: Does undrepost keep its own user records, and what do authorship relations reference? → A: A local `Members` **mirror** collection, JIT-provisioned from the undrlla IdP `sub` on first login (caches role + profile); all authorship/participation relations FK to it; undrlla remains the authoritative identity store.
 - Q: Is undrepost multi-tenant or single-tenant per instance? → A: Single-tenant per instance — one blog per deploy bound to one undrlla tenant via config; no `tenant_id`/RLS in collections; the IdP claim's `tenant_id` is validated against the bound tenant.
-- Q: Where does the blog admin/member role come from? → A: Resolved in undrepost via a config allowlist (IdP `sub`/email) granting `admin` in the local Member mirror (bootstrap like legacy `ADMIN_EMAILS`); default `member`. The IdP claim provides identity, not blog authorization.
+- Q: Where does the blog admin/member role come from? → A: Resolved in undrepost via a config allowlist (IdP `sub` only) granting `admin` in the local Member mirror (bootstrap like legacy `ADMIN_SUBS`); default `member`. The IdP claim provides identity, not blog authorization.
 - Q: Do Wave-1 reaction/poll counts need live real-time, or optimistic+refetch? → A: Full multi-user SSE push from Wave 1 — undrepost builds its own SSE feed for social counts (auction real-time stays in undrlla). SSE MUST define heartbeat + reconnect/replay + connection limits.
 
 ---
@@ -229,7 +229,7 @@ As the **maintainer**, I pull upstream Payload releases via Sync fork with minim
 
 ### Key Entities (Payload collections unless noted)
 
-- **Member** (local IdP mirror): keyed by undrlla IdP `sub` (unique), JIT-provisioned on first login; caches role (admin/member) + profile; non-authoritative (undrlla holds identity, FR-014). **All authorship/participation relations FK to `Member`** (Post.author, Comment.author, Reaction.user, PollVote.user). (legacy `User`)
+- **Member** (local IdP mirror): keyed by undrlla IdP `sub` (unique), JIT-provisioned on first login; caches role (admin/member) + profile; non-authoritative (undrlla holds identity, FR-014). **All authorship/participation relations FK to `Member`** (Post.author, Comment.author, Reaction.author, PollVote.member). (legacy `User`)
 - **Post**: title, slug, rich-text body, cover image, status. (legacy `BlogPost`)
 - **Comment**: body, author, post, soft-delete (`deletedAt`). (legacy `Comment`)
 - **Media**: S3-backed upload. (legacy `MediaFile`)

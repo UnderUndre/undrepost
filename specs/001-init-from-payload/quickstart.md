@@ -12,7 +12,7 @@ Environment
   - `DATABASE_URL` — Postgres connection string
   - `IDP_ISSUER` — undrlla OIDC issuer
   - `IDP_JWKS_URL` — JWKS URL to validate tokens
-  - `ADMIN_ALLOWLIST` — comma-separated admin sub or emails (for bootstrap)
+  - `ADMIN_ALLOWLIST` — comma-separated admin sub values (for bootstrap)
 
 Local dev (quick)
 
