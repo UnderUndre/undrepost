@@ -131,6 +131,10 @@
     "test:unit": "vitest run --project unit",
     "translateNewKeys": "pnpm --filter @tools/scripts run generateTranslations:core"
   },
+  "dependencies": {
+    "@underundre/undesign": "0.1.0",
+    "underundre-clai-helpers": "0.5.0"
+  },
   "devDependencies": {
     "@ai-sdk/anthropic": "3.0.84",
     "@ai-sdk/openai": "3.0.71",
